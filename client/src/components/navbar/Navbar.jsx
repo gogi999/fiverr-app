@@ -5,11 +5,18 @@ import React, {
   useState,
 } from 'react';
 
-// import { Link } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+} from 'react-router-dom';
+
 import JaneDoe from '../../../public/img/JaneDoe.png';
 
 const Navbar = () => {
     const [active, setActive] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const { pathname } = useLocation();
 
     const isActive = () => {
         window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -30,12 +37,12 @@ const Navbar = () => {
     }
 
     return (
-        <div className={active ? "navbar active" : "navbar"}>
+        <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
             <div className="container">
                 <div className="logo">
-                    {/* <Link to="/"> */}
+                    <Link to="/" className="link">
                         <span className="text">fiverr</span>
-                    {/* </Link> */}
+                    </Link>
                     <span className="dot">.</span>
                 </div>
                 <div className="links">
@@ -46,31 +53,59 @@ const Navbar = () => {
                     {!currentUser?.isSeller && <span>Become a Seller</span>}
                     {!currentUser && <button>Join</button>}
                     {currentUser && (
-                        <div className="user">
+                        <div className="user" onClick={() => setOpen(!open)}>
                             <img src={JaneDoe} alt="" />
                             <span>{currentUser?.username}</span>
-                            <div className="options">
-                                {currentUser.isSeller && (
-                                    <>
-                                        <span>Gigs</span>
-                                        <span>Add New Gig</span>
-                                    </>
-                                )}
-                                <span>Orders</span>
-                                <span>Messages</span>
-                                <span>Logout</span>
-                            </div>
+                            {open && (
+                                <div className="options">
+                                    {currentUser.isSeller && (
+                                        <>
+                                            <Link to="/mygigs" className="link">Gigs</Link>
+                                            <Link to="/add" className="link">Add New Gig</Link>
+                                        </>
+                                    )}
+                                    <Link to="/orders" className="link">Orders</Link>
+                                    <Link to="/messages" className="link">Messages</Link>
+                                    <Link to="/" className="link">Logout</Link>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
             </div>
-            {active && (
+            {(active || pathname !== "/") && (
                 <>
                     <hr />
                     <div className="menu">
-                        <span>Test 1</span>
-                        <span>Test 2</span>
+                        <Link className="link menuLink" to="/">
+                            Graphics & Design
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Video & Animation
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Writing & Translation
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            AI Services
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Digital Marketing
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Music & Audio
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Programming & Tech
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Business
+                        </Link>
+                        <Link className="link menuLink" to="/">
+                            Lifestyle
+                        </Link>
                     </div>
+                    <hr />
                 </>
             )}
         </div>
