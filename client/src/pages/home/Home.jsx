@@ -28,7 +28,7 @@ const Home = () => {
                     <div className="item">
                         <h1>A whole world of freelance talent at your fingertips</h1>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             The best for every budget
                         </div>
                         <p>
@@ -36,7 +36,7 @@ const Home = () => {
                             just project-based pricing.
                         </p>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             Quality work done quickly
                         </div>
                         <p>
@@ -44,7 +44,7 @@ const Home = () => {
                             minutes.
                         </p>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             Protected payments, every time
                         </div>
                         <p>
@@ -52,7 +52,7 @@ const Home = () => {
                             until you approve the work.
                         </p>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             24/7 support
                         </div>
                         <p>
@@ -61,7 +61,7 @@ const Home = () => {
                         </p>
                     </div>
                     <div className="item">
-                        <video src="./img/video.wmv" controls></video>
+                        <video src="/img/video.wmv" controls></video>
                     </div>
                 </div>
             </div>
@@ -79,15 +79,15 @@ const Home = () => {
                             dedicated to businesses
                         </p>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             Connect to freelancers with proven business experience
                         </div>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             Get matched with the perfect talent by a customer success manager
                         </div>
                         <div className="title">
-                            <img src="./img/check.png" alt="" />
+                            <img src="/img/check.png" alt="" />
                             Manage teamwork and boost productivity with one powerful workspace
                         </div>
                         <button>Explore Liverr Business</button>
