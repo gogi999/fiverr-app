@@ -1,7 +1,11 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+
+import authRouter from './routes/auth.route.js';
+import userRouter from './routes/user.route.js';
 
 dotenv.config();
 
@@ -19,8 +23,22 @@ const connectDB = async () => {
     }
 }
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
+app.use(cookieParser());
 app.use(express.json());
+
+app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
+
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500;
+    const errorMessage = err.message || 'Something went wrong';
+
+    return res.status(errorStatus).send(errorMessage);
+});
 
 app.listen(port, () => {
     connectDB();
