@@ -5,6 +5,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import authRouter from './routes/auth.route.js';
+import gigRouter from './routes/gig.route.js';
 import userRouter from './routes/user.route.js';
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
+app.use('/api/gigs', gigRouter);
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;

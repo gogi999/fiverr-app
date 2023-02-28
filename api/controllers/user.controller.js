@@ -15,3 +15,13 @@ export const deleteUser = async (req, res, next) => {
         next(err);
     }
 }
+
+export const getUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id);
+        
+        return res.status(200).send(user);
+    } catch (err) {
+        next(err);
+    }
+}

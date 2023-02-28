@@ -1,18 +1,45 @@
 /* eslint-disable react/no-unescaped-entities */
 import './Gigs.scss';
 
-import React, { useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+
+import { useLocation } from 'react-router-dom';
+
+import { useQuery } from '@tanstack/react-query';
 
 import GigCard from '../../components/gigCard/GigCard';
-import { gigs } from '../../data';
+import newRequest from '../../utils/newRequest';
 
 const Gigs = () => {
     const [sort, setSort] = useState('sales');
     const [open, setOpen] = useState(false);
+    const minRef = useRef();
+    const maxRef = useRef();
+    const { search } = useLocation();
+    
+    const { isLoading, error, data, refetch } = useQuery({
+        queryKey: ['gigs'],
+        queryFn: () => 
+            newRequest
+                .get(`/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`)
+                .then((res) => res.data),
+    });
 
     const reSort = (type) => {
         setSort(type);
         setOpen(false);
+    }
+
+    useEffect(() => {
+        refetch();
+    }, [sort]);
+
+    const apply = () => {
+        refetch();
     }
 
     return (
@@ -28,9 +55,9 @@ const Gigs = () => {
                 <div className="menu">
                     <div className="left">
                         <span>Budget</span>
-                        <input type="number" placeholder="min" />
-                        <input type="number" placeholder="max" />
-                        <button>Apply</button>
+                        <input ref={minRef} type="number" placeholder="min" />
+                        <input ref={maxRef} type="number" placeholder="max" />
+                        <button onClick={apply}>Apply</button>
                     </div>
                     <div className="right">
                         <span className="sortBy">SortBy</span>
@@ -54,9 +81,12 @@ const Gigs = () => {
                     </div>
                 </div>
                 <div className="cards">
-                    {gigs.map((gig) => (
-                        <GigCard key={gig.id} item={gigs} />
-                    ))}
+                    {isLoading 
+                        ? "Loading..." 
+                        : error ? "Something went wrong" : data.map((gig) => (
+                            <GigCard key={gig._id} item={data} />
+                        )
+                    )}
                 </div>
             </div>
         </div>
