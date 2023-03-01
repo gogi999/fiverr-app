@@ -5,7 +5,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import authRouter from './routes/auth.route.js';
+import conversationRouter from './routes/conversation.route.js';
 import gigRouter from './routes/gig.route.js';
+import messageRouter from './routes/message.route.js';
+import orderRouter from './routes/order.route.js';
+import reviewRouter from './routes/review.route.js';
 import userRouter from './routes/user.route.js';
 
 dotenv.config();
@@ -34,6 +38,10 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/gigs', gigRouter);
+app.use('/api/reviews', reviewRouter);
+app.use('/api/orders', orderRouter);
+app.use('/api/conversations', conversationRouter);
+app.use('/api/messages', messageRouter);
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
