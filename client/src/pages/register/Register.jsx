@@ -70,7 +70,7 @@ const Register = () => {
                     <input 
                         type="email" 
                         name="email" 
-                        placeholder="Enter username..." 
+                        placeholder="Enter email..." 
                         onChange={handleChange}
                     />
                     <label htmlFor="">Password</label>

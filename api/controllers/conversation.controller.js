@@ -1,4 +1,5 @@
 import Conversation from '../models/conversation.model.js';
+import createError from '../utils/createError.js';
 
 export const createConversation = async (req, res, next) => {
     const newConversation = new Conversation({
@@ -6,9 +7,9 @@ export const createConversation = async (req, res, next) => {
         sellerId: req.isSeller ? req.userId : req.body.to,
         buyerId: req.isSeller ? req.body.to : req.userId,
         readBySeller: req.isSeller,
-        readByBuyer: !req.isSeller, 
+        readByBuyer: !req.isSeller,
     });
-
+  
     try {
         const savedConversation = await newConversation.save();
         res.status(201).send(savedConversation);
@@ -23,7 +24,7 @@ export const getConversations = async (req, res, next) => {
             req.isSeller 
                 ? { sellerId: req.userId }
                 : { buyerId: req.userId }
-        );
+        ).sort({ updatedAt: -1 });
         res.status(200).send(conversations);
     } catch (err) {
         next(err);
@@ -33,6 +34,9 @@ export const getConversations = async (req, res, next) => {
 export const getSingleConversation = async (req, res, next) => {
     try {
         const conversation = await Conversation.findOne({id: req.params.id });
+
+        if (!conversation) return next(createError(404, 'Not found!'));
+
         res.status(200).send(conversation);
     } catch (err) {
         next(err);
